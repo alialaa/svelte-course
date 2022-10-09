@@ -1,6 +1,11 @@
 <script>
 	let count = 0;
-	let string = `You have clicked ${count} times.`;
+	// let string = `You have clicked ${count} times.`;
+	$: string = `You have clicked ${count} times.`;
+
+	$: if (count > 5) {
+		console.log(`The count is ${count}`);
+	}
 
 	function increment() {
 		count += 1;
