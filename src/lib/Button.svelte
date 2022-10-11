@@ -8,6 +8,7 @@
 </script>
 
 <button
+	on:click
 	style:--buttonBgColor={bgColor}
 	style:--buttonTextColor={textColor}
 	class:size-lg={size === 'large'}
@@ -21,7 +22,7 @@
 			on:mouseenter={() => (isLeftHovered = true)}
 			on:mouseleave={() => (isLeftHovered = false)}
 		>
-			<slot name="leftContent" x="y" />
+			<slot name="leftContent" />
 		</div>
 	{/if}
 	<slot {isLeftHovered}>Fallback</slot>
