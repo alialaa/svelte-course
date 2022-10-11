@@ -10,19 +10,30 @@
 	style:--buttonTextColor={textColor}
 	class:size-lg={size === 'large'}
 	class:size-sm={size === 'small'}
+	class:has-left={$$slots.leftContent}
 	class:shadow
 >
+	{#if $$slots.leftContent}
+		<div class="left-content">
+			<slot name="leftContent" />
+		</div>
+	{/if}
 	<slot>Fallback</slot>
 </button>
 
 <style lang="scss">
 	button {
+		display: flex;
+		align-items: center;
 		border: none;
 		background-color: var(--buttonBgColor);
 		color: var(--buttonTextColor);
 		font-weight: bold;
 		border-radius: 5px;
 		cursor: pointer;
+		.left-content {
+			margin-right: 10px;
+		}
 		&:hover {
 			background-image: linear-gradient(rgba(0, 0, 0, 0.4) 0 0);
 		}
