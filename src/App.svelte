@@ -11,6 +11,7 @@
 	let:isLeftHovered
 	size="small"
 	shadow
+	disabled
 >
 	<div style:width="20px" slot="leftContent">
 		{#if isLeftHovered}
