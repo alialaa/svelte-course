@@ -5,4 +5,4 @@ const app = new App({
 	target: document.getElementById('app')
 });
 
-export default App;
+export default app;
