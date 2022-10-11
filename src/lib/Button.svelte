@@ -1,9 +1,17 @@
 <script>
 	export let size = 'small';
 	export let shadow = false;
+	export let bgColor = undefined;
+	export let textColor = undefined;
 </script>
 
-<button class:size-lg={size === 'large'} class:size-sm={size === 'small'} class:shadow>
+<button
+	style:background-color={bgColor}
+	style:color={textColor}
+	class:size-lg={size === 'large'}
+	class:size-sm={size === 'small'}
+	class:shadow
+>
 	<slot>Fallback</slot>
 </button>
 
