@@ -3,7 +3,7 @@
 
 <button><slot>Fallback</slot></button>
 
-<style>
+<style lang="scss">
 	button {
 		border: none;
 		background-color: #ff3e00;
@@ -12,5 +12,8 @@
 		font-weight: bold;
 		border-radius: 5px;
 		cursor: pointer;
+		&:hover {
+			background-color: variables.$color;
+		}
 	}
 </style>
