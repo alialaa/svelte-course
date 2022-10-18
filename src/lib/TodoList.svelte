@@ -27,6 +27,13 @@
 			id
 		});
 	}
+
+	function handleToggleTodo(id, value) {
+		dispatch('toggletodo', {
+			id,
+			value
+		});
+	}
 </script>
 
 <div class="todo-list-wrapper">
@@ -34,7 +41,14 @@
 		{#each todos as { id, title, completed } (id)}
 			<li>
 				<label>
-					<input type="checkbox" checked={completed} />
+					<input
+						on:input={(event) => {
+							event.currentTarget.checked = completed;
+							handleToggleTodo(id, !completed);
+						}}
+						type="checkbox"
+						checked={completed}
+					/>
 					{title}
 				</label>
 				<button on:click={() => handleRemoveTodo(id)}>Remove</button>
