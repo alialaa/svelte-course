@@ -3,6 +3,7 @@
 <script>
 	import Button from './Button.svelte';
 	import { createEventDispatcher } from 'svelte';
+	import { loop_guard } from 'svelte/internal';
 
 	export let todos = [];
 	export const readonly = 'read only';
@@ -47,6 +48,8 @@
 <div class="todo-list-wrapper">
 	<ul>
 		{#each todos as { id, title, completed } (id)}
+			{(console.log(title), '')}
+			{@debug id, title}
 			<li>
 				<label>
 					<input
