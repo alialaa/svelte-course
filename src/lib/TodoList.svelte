@@ -10,7 +10,10 @@
     autoscroll = false;
   });
 
-  export let todos = [];
+  export let todos = null;
+  export let error = null;
+  export let isLoading = false;
+
   let prevTodos = todos;
   let inputText = '';
   let input, listDiv, autoscroll, listDivScrollHeight;
@@ -18,7 +21,7 @@
   const dispatch = createEventDispatcher();
 
   $: {
-    autoscroll = todos.length > prevTodos.length;
+    autoscroll = todos && prevTodos && todos.length > prevTodos.length;
     prevTodos = todos;
   }
 
@@ -59,40 +62,46 @@
 </script>
 
 <div class="todo-list-wrapper">
-  <div class="todo-list" bind:this={listDiv}>
-    <div bind:offsetHeight={listDivScrollHeight}>
-      {#if todos.length === 0}
-        <p class="no-items-text">No todos yet</p>
-      {:else}
-        <ul>
-          {#each todos as { id, title, completed } (id)}
-            <li class:completed>
-              <label>
-                <input
-                  on:input={(event) => {
-                    event.currentTarget.checked = completed;
-                    handleToggleTodo(id, !completed);
-                  }}
-                  type="checkbox"
-                  checked={completed}
-                />
-                {title}
-              </label>
-              <button
-                class="remove-todo-button"
-                aria-label="Remove todo: {title}"
-                on:click={() => handleRemoveTodo(id)}
-              >
-                <span style:width="10px" style:display="inline-block">
-                  <FaRegTrashAlt />
-                </span>
-              </button>
-            </li>
-          {/each}
-        </ul>
-      {/if}
+  {#if isLoading}
+    <p class="state-text">Loading...</p>
+  {:else if error}
+    <p class="state-text">{error}</p>
+  {:else if todos}
+    <div class="todo-list" bind:this={listDiv}>
+      <div bind:offsetHeight={listDivScrollHeight}>
+        {#if todos.length === 0}
+          <p class="state-text">No todos yet</p>
+        {:else}
+          <ul>
+            {#each todos as { id, title, completed } (id)}
+              <li class:completed>
+                <label>
+                  <input
+                    on:input={(event) => {
+                      event.currentTarget.checked = completed;
+                      handleToggleTodo(id, !completed);
+                    }}
+                    type="checkbox"
+                    checked={completed}
+                  />
+                  {title}
+                </label>
+                <button
+                  class="remove-todo-button"
+                  aria-label="Remove todo: {title}"
+                  on:click={() => handleRemoveTodo(id)}
+                >
+                  <span style:width="10px" style:display="inline-block">
+                    <FaRegTrashAlt />
+                  </span>
+                </button>
+              </li>
+            {/each}
+          </ul>
+        {/if}
+      </div>
     </div>
-  </div>
+  {/if}
   <form class="add-todo-form" on:submit|preventDefault={handleAddTodo}>
     <input bind:this={input} bind:value={inputText} placeholder="New Todo" />
     <Button class="add-todo-button" type="submit" disabled={!inputText}>Add</Button>
@@ -103,7 +112,7 @@
   .todo-list-wrapper {
     background-color: #424242;
     border: 1px solid #4b4b4b;
-    .no-items-text {
+    .state-text {
       margin: 0;
       padding: 15px;
       text-align: center;
