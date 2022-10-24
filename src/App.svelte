@@ -108,7 +108,7 @@
   Show/Hide list
 </label>
 {#if showList}
-  <div transition:fade={{ duration: 1000 }} style:max-width="400px">
+  <div style:max-width="800px">
     <TodoList
       {todos}
       {error}
