@@ -4,7 +4,7 @@
   import Button from './Button.svelte';
   import { createEventDispatcher, afterUpdate } from 'svelte';
   import FaRegTrashAlt from 'svelte-icons/fa/FaRegTrashAlt.svelte';
-  import { scale } from 'svelte/transition';
+  import { scale, crossfade } from 'svelte/transition';
   import { flip } from 'svelte/animate';
 
   afterUpdate(() => {
@@ -15,6 +15,13 @@
 
       if (autoscroll) listDiv.scrollTo(0, pos);
       autoscroll = false;
+    }
+  });
+
+  const [send, receive] = crossfade({
+    duration: 400,
+    fallback(node) {
+      return scale(node, { start: 0.5, duration: 300 });
     }
   });
 
@@ -95,7 +102,11 @@
                     {@const { id, completed, title } = todo}
                     <li animate:flip={{ duration: 300 }}>
                       <slot {todo} {index} {handleToggleTodo}>
-                        <div transition:scale|local={{ start: 0.5, duration: 300 }} class:completed>
+                        <div
+                          in:receive|local={{ key: id }}
+                          out:send|local={{ key: id }}
+                          class:completed
+                        >
                           <label>
                             <input
                               disabled={disabledItems.includes(id)}
