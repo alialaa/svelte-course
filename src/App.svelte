@@ -3,6 +3,7 @@
   import { v4 as uuid } from 'uuid';
   import { tick, onMount } from 'svelte';
   import { fly } from 'svelte/transition';
+  import spin from './lib/transitions/spin';
 
   let todoList;
   let showList = true;
@@ -107,7 +108,7 @@
   Show/Hide list
 </label>
 {#if showList}
-  <div style:max-width="400px">
+  <div transition:spin style="opacity:0.5" style:max-width="400px">
     <TodoList
       {todos}
       {error}
