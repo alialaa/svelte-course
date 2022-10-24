@@ -4,7 +4,7 @@
   import Button from './Button.svelte';
   import { createEventDispatcher, afterUpdate } from 'svelte';
   import FaRegTrashAlt from 'svelte-icons/fa/FaRegTrashAlt.svelte';
-  import { identity } from 'svelte/internal';
+  import { scale } from 'svelte/transition';
 
   afterUpdate(() => {
     if (autoscroll) listDiv.scrollTo(0, listDivScrollHeight);
@@ -80,7 +80,7 @@
               {@const { id, completed, title } = todo}
               <li>
                 <slot {todo} {index} {handleToggleTodo}>
-                  <div class:completed>
+                  <div transition:scale|local={{ start: 0.5, duration: 300 }} class:completed>
                     <label>
                       <input
                         disabled={disabledItems.includes(id)}
