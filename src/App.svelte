@@ -44,7 +44,7 @@
     }).then(async (response) => {
       if (response.ok) {
         const todo = await response.json();
-        todos = [...todos, { ...todo, id: uuid() }];
+        todos = [{ ...todo, id: uuid() }, ...todos];
         todoList.clearInput();
       } else {
         alert('An error has occurred.');
@@ -114,6 +114,7 @@
       {isLoading}
       {disabledItems}
       disableAdding={isAdding}
+      scrollOnAdd="top"
       bind:this={todoList}
       on:addtodo={handleAddTodo}
       on:removetodo={handleRemoveTodo}
