@@ -108,7 +108,7 @@
   Show/Hide list
 </label>
 {#if showList}
-  <div transition:spin style="opacity:0.5" style:max-width="400px">
+  <div transition:spin={{ spin: 1, duration: 4000 }} style:max-width="400px">
     <TodoList
       {todos}
       {error}
