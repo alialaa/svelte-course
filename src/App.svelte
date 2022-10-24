@@ -2,7 +2,8 @@
   import TodoList from './lib/TodoList.svelte';
   import { v4 as uuid } from 'uuid';
   import { tick, onMount } from 'svelte';
-  import { identity } from 'svelte/internal';
+  import { fly, slide, blur } from 'svelte/transition';
+  import { cubicInOut, bounceInOut } from 'svelte/easing';
 
   let todoList;
   let showList = true;
@@ -107,7 +108,15 @@
   Show/Hide list
 </label>
 {#if showList}
-  <div style:max-width="400px">
+  <div
+    in:slide={{ duration: 700, easing: cubicInOut }}
+    out:blur={{ amount: 10, duration: 700 }}
+    on:introstart={() => console.log('introstart')}
+    on:introend={() => console.log('introend')}
+    on:outrostart={() => console.log('outrostart')}
+    on:outroend={() => console.log('outroend')}
+    style:max-width="400px"
+  >
     <TodoList
       {todos}
       {error}
@@ -118,26 +127,7 @@
       on:addtodo={handleAddTodo}
       on:removetodo={handleRemoveTodo}
       on:toggletodo={handleToggleTodo}
-      let:todo
-      let:handleToggleTodo
-      let:index
-    >
-      <svelte:fragment slot="title">{index + 1}- {todo.title}</svelte:fragment>
-      <!-- {@const { id, completed, title } = todo} -->
-      <!-- <Todo {todo} on:remove on:toggle /> -->
-      <!-- <div>
-        <input
-          disabled={disabledItems.includes(id)}
-          on:input={(event) => {
-            event.currentTarget.checked = completed;
-            handleToggleTodo(id, !completed);
-          }}
-          type="checkbox"
-          checked={completed}
-        />
-        {title}
-      </div> -->
-    </TodoList>
+    />
   </div>
 {/if}
 
