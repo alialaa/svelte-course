@@ -1,12 +1,27 @@
 export default function longpress(node, options) {
-  console.log(node, options);
+  let timer;
+
+  function handleMouseDown() {
+    const { duration = 2000 } = options;
+    timer = setTimeout(() => {
+      node.dispatchEvent(new CustomEvent('longpress'));
+    }, duration);
+  }
+  function handleMouseUp() {
+    clearTimeout(timer);
+  }
+
+  node.addEventListener('mousedown', handleMouseDown);
+  node.addEventListener('mouseup', handleMouseUp);
 
   return {
     update(newOptions) {
-      console.log(newOptions);
+      options = newOptions;
     },
     destroy() {
-      console.log('destroyed');
+      clearTimeout(timer);
+      node.removeEventListener('mousedown', handleMouseDown);
+      node.removeEventListener('mouseup', handleMouseUp);
     }
   };
 }

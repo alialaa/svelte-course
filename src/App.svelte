@@ -12,7 +12,12 @@
 </label>
 
 {#if showButton}
-  <button use:longpress={{ duration }}>Hello</button>
+  <button
+    use:longpress={{ duration }}
+    on:longpress={() => {
+      alert('pressed');
+    }}>Hello</button
+  >
 {/if}
 
 <style>
