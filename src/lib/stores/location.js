@@ -1,8 +1,9 @@
 import { readable } from 'svelte/store';
 
 const location = readable(null, (set) => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
+  let watchId;
+  if (navigator.geolocation && navigator.geolocation.watchPosition) {
+    watchId = navigator.geolocation.watchPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
         set({ latitude, longitude });
@@ -13,6 +14,9 @@ const location = readable(null, (set) => {
     );
   }
   return () => {
+    if (navigator.geolocation && navigator.geolocation.clearWatch) {
+      navigator.geolocation.clearWatch(watchId);
+    }
     set(null);
   };
 });
