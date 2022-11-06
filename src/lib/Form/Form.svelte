@@ -23,5 +23,9 @@
     }
   }}
 >
-  <slot />
+  <slot
+    hasErrors={Object.keys($formStore.errors).length > 0}
+    values={$formStore.values}
+    errors={$formStore.errors}
+  />
 </form>

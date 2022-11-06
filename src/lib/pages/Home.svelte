@@ -9,8 +9,15 @@
     console.log(e.detail);
   }}
   initialValues={{ username: 'Test', email: 'test@test.com' }}
+  let:hasErrors
+  let:values
+  let:errors
 >
-  <Field label="Username" name="username" type="text" validate={validateRequiredField} />
+  {JSON.stringify(values)}
+  {JSON.stringify(errors)}
+  <Field label="Username" name="username" type="text" validate={validateRequiredField}>
+    <p style:color="green" slot="error" let:error>{error}</p>
+  </Field>
   <Field
     label="Email"
     name="email"
@@ -20,5 +27,17 @@
     }}
   />
   <Field label="password" name="password" type="password" validate={validateRequiredField} />
-  <Button type="submit">Submit</Button>
+  <Button type="submit" disabled={hasErrors}>Submit</Button>
+</Form>
+<Form
+  on:submit={(e) => {
+    console.log(e.detail);
+  }}
+  let:hasErrors
+>
+  <Field label="Username" name="username2" type="text" validate={validateRequiredField}>
+    <p style:color="green" slot="error" let:error>{error}</p>
+  </Field>
+  <Field label="password" name="password2" type="password" validate={validateRequiredField} />
+  <Button type="submit" disabled={hasErrors}>Submit</Button>
 </Form>
