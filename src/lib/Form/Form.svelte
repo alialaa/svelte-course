@@ -1,12 +1,23 @@
 <script>
-  import { setContext } from 'svelte';
+  import { setContext, createEventDispatcher } from 'svelte';
+  import { writable } from 'svelte/store';
   import formKey from './form-key';
 
-  export let initialValues = {};
+  const dispatch = createEventDispatcher();
 
-  setContext(formKey, { values: initialValues });
+  export let initialValues = {};
+  const form = writable({ values: initialValues, errors: {} });
+
+  setContext(formKey, form);
 </script>
 
-<form>
+<pre>
+{JSON.stringify($form, null, 2)}
+</pre>
+<form
+  on:submit|preventDefault={() => {
+    dispatch('submit', $form.values);
+  }}
+>
   <slot />
 </form>

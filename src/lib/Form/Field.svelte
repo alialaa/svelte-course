@@ -8,7 +8,7 @@
   export let label = undefined;
   export let validate = undefined;
 
-  const { values } = getContext(formKey);
+  const formStore = getContext(formKey);
 
   const id = uuid();
 </script>
@@ -22,10 +22,9 @@
     {name}
     {type}
     placeholder={label}
-    value={values[name] || ''}
+    value={$formStore.values[name] || ''}
     on:input={(e) => {
-      //   values[name] = e.currentTarget.value;
-      //   console.log(e.currentTarget.value);
+      $formStore.values[name] = e.currentTarget.value;
     }}
   />
 </div>
