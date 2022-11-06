@@ -1,10 +1,14 @@
 <script>
   import { v4 as uuid } from 'uuid';
+  import { getContext } from 'svelte';
+  import formKey from './form-key';
 
   export let name;
   export let type = 'text';
   export let label = undefined;
   export let validate = undefined;
+
+  const { values } = getContext(formKey);
 
   const id = uuid();
 </script>
@@ -13,7 +17,17 @@
   {#if label}
     <label for={id}>{label}</label>
   {/if}
-  <input {id} {name} {type} placeholder={label} />
+  <input
+    {id}
+    {name}
+    {type}
+    placeholder={label}
+    value={values[name] || ''}
+    on:input={(e) => {
+      //   values[name] = e.currentTarget.value;
+      //   console.log(e.currentTarget.value);
+    }}
+  />
 </div>
 
 <style>
