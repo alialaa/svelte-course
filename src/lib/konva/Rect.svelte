@@ -15,7 +15,7 @@
 
   const layer = getContext(layerKey);
 
-  const rect = new Konva.Rect($$props);
+  export const rect = new Konva.Rect($$props);
   layer.add(rect);
 
   rect.on('click mousedown', (e) => {
