@@ -1,7 +1,9 @@
 <script>
   import Konva from 'konva';
-  import { getContext, onDestroy } from 'svelte';
+  import { getContext, onDestroy, createEventDispatcher } from 'svelte';
   import { layerKey } from './context-keys';
+
+  const dispatch = createEventDispatcher();
 
   //   export let x = undefined;
   //   export let y = undefined;
@@ -15,6 +17,10 @@
 
   const rect = new Konva.Rect($$props);
   layer.add(rect);
+
+  rect.on('click mousedown', (e) => {
+    dispatch(e.type, e);
+  });
 
   $: rect.setAttrs($$props);
 
