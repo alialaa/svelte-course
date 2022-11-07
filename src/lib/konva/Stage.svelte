@@ -1,11 +1,16 @@
 <script>
   import Konva from 'konva';
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy, setContext } from 'svelte';
+  import { stageKey } from './context-keys';
 
   export let width;
   export let height;
   let container;
   let stage;
+
+  setContext(stageKey, {
+    getStage: () => stage
+  });
 
   onMount(() => {
     stage = new Konva.Stage({
@@ -21,5 +26,7 @@
 </script>
 
 <div bind:this={container}>
-  <slot />
+  {#if stage}
+    <slot />
+  {/if}
 </div>
