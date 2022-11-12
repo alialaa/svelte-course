@@ -1,5 +1,16 @@
 <script context="module">
   let allVideos = new Set();
+
+  export function playAll() {
+    allVideos.forEach((video) => {
+      video.play();
+    });
+  }
+  export function pauseAll() {
+    allVideos.forEach((video) => {
+      video.pause();
+    });
+  }
 </script>
 
 <script>
@@ -18,19 +29,7 @@
   });
 </script>
 
-<video
-  bind:this={video}
-  class:playing={!paused}
-  {src}
-  controls
-  muted
-  bind:paused
-  on:play={() => {
-    allVideos.forEach((_video) => {
-      if (_video !== video) _video.pause();
-    });
-  }}
-/>
+<video bind:this={video} class:playing={!paused} {src} controls muted bind:paused />
 
 <style>
   video.playing {
