@@ -1,20 +1,7 @@
 <script>
-  import Button, { getTotalButtons } from '../Button.svelte';
-  let showButton = false;
-  let total;
+  import VideoPlayer from '../VideoPlayer.svelte';
 </script>
 
-<input type="checkbox" bind:checked={showButton} />
-
-<Button>Button</Button>
-<Button>Button</Button>
-{#if showButton}
-  <Button>Button</Button>
-{/if}
-
-{total}
-<button
-  on:click={() => {
-    total = getTotalButtons();
-  }}>Update buttons count</button
->
+<VideoPlayer src="mov_bbb.mp4" />
+<VideoPlayer src="mov_bbb.mp4" />
+<VideoPlayer src="mov_bbb.mp4" />

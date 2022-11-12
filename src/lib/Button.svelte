@@ -23,7 +23,6 @@
   });
 </script>
 
-{totalButtons}
 <button
   on:click
   style:--buttonBgColor={bgColor}
